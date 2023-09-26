@@ -2,14 +2,16 @@ import 'package:client_control/models/clientsStore.dart';
 import 'package:client_control/pages/client_types_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'models/clientTypeStore.dart';
 import 'pages/clients_page.dart';
 
-void main() {
-  runApp(ChangeNotifierProvider(
-    create: (_) => ClientsStore(),
-    child: const MyApp(),
-  ));
-}
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ClientsStore()),
+        ChangeNotifierProvider(create: (_) => ClientTypeStore())
+      ],
+      child: const MyApp(),
+    ));
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const ClientsPage(title: 'Clientes'),
+        '/': (context) => const ClientsPage(title: 'Clients'),
         '/tipos': (context) => const ClientTypesPage(title: 'Tipos de cliente'),
       },
     );

@@ -1,3 +1,4 @@
+import 'package:client_control/models/clientTypeStore.dart';
 import 'package:client_control/models/client_type.dart';
 import 'package:client_control/models/client.dart';
 import 'package:client_control/models/clientsStore.dart';
@@ -35,12 +36,12 @@ class _ClientsPageState extends State<ClientsPage> {
   //       type: ClientType(name: 'Diamond', icon: Icons.diamond)),
   // ];
 
-  List<ClientType> types = [
-    ClientType(name: 'Platinum', icon: Icons.credit_card),
-    ClientType(name: 'Golden', icon: Icons.card_membership),
-    ClientType(name: 'Titanium', icon: Icons.credit_score),
-    ClientType(name: 'Diamond', icon: Icons.diamond),
-  ];
+  // List<ClientType> types = [
+  //   ClientType(name: 'Platinum', icon: Icons.credit_card),
+  //   ClientType(name: 'Golden', icon: Icons.card_membership),
+  //   ClientType(name: 'Titanium', icon: Icons.credit_score),
+  //   ClientType(name: 'Diamond', icon: Icons.diamond),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +86,9 @@ class _ClientsPageState extends State<ClientsPage> {
   void createType(context) {
     TextEditingController nomeInput = TextEditingController();
     TextEditingController emailInput = TextEditingController();
-    ClientType dropdownValue = types[0];
+    var clientTypes =
+        Provider.of<ClientTypeStore>(context, listen: false).clientTypes;
+    ClientType dropdownValue = clientTypes[0];
 
     showDialog(
         context: context,
@@ -131,7 +134,7 @@ class _ClientsPageState extends State<ClientsPage> {
                             dropdownValue = newValue as ClientType;
                           });
                         },
-                        items: types.map((ClientType type) {
+                        items: clientTypes.map((ClientType type) {
                           return DropdownMenuItem<ClientType>(
                             value: type,
                             child: Text(type.name),
