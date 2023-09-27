@@ -6,10 +6,14 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:client_control/components/hamburger_menu.dart';
+import 'package:client_control/components/icon_picker.dart';
+import 'package:client_control/models/clientTypeStore.dart';
+import 'package:client_control/pages/client_types_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:client_control/main.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   group("Test drawer Menu", () {
@@ -33,6 +37,41 @@ void main() {
 
       final logoutOption = find.widgetWithText(ListTile, "Sair");
       expect(logoutOption, findsOneWidget);
+    });
+  });
+
+  group("Test IconPicker", () {
+    testWidgets('Should show close option', (tester) async {
+      await tester.pumpWidget(ChangeNotifierProvider.value(
+        value: ClientTypeStore(),
+        child: const MaterialApp(
+            home: ClientTypesPage(
+          title: 'Test',
+        )),
+      ));
+      final fab = find.byType(FloatingActionButton);
+      expect(fab, findsOneWidget);
+      await tester.tap(fab);
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(AlertDialog);
+      expect(dialog, findsOneWidget);
+
+      final selectIconButton =
+          find.widgetWithText(ElevatedButton, "Selecionar icone");
+      expect(selectIconButton, findsOneWidget);
+      await tester.tap(selectIconButton);
+
+      await tester.pumpAndSettle();
+
+      final iconDialog = find.widgetWithText(AlertDialog, "Escolha um ícone");
+      expect(iconDialog, findsOneWidget);
+
+      final iconsOptions = find.byType(IconButton);
+      expect(iconsOptions, findsWidgets);
+
+      final closeButton = find.widgetWithText(ElevatedButton, "Fechar");
+      expect(closeButton, findsOneWidget);
     });
   });
 }
