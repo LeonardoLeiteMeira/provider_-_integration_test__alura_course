@@ -1,6 +1,7 @@
 ![Thumbnail GitHub](./thumb.png)
+# Course of provider and Integration Test from Alura
 
-# Flutter: Gerenciamento de estados complexos
+## Flutter: Complex state management
 
 Esse curso de Flutter vai te ensinar a: 
 
@@ -15,13 +16,13 @@ Esse curso de Flutter vai te ensinar a:
 -> Criar Widgets focados em estado e passagem de dados
 
 
-## 🔨 Projeto: Client Control
+### 🔨 Projeto: Client Control
 
 O projeto do curso consiste em um gerenciamento de clientes de maneira que podemos cadastrar clientes, tipos de clientes e vincular os tipos cadastrados com os clientes utilizando abordagens de gerenciamento de estados.
 
 ![](./screenshot.png)
 
-## ✔️ Técnicas e tecnologias
+### ✔️ Técnicas e tecnologias
 
 **Veja mais de perto o que você aprenderá sobre** :
 - `Provider`: Você aprenderá o que é o provider e o seu poder como gerenciador de estados.
@@ -33,10 +34,8 @@ O projeto do curso consiste em um gerenciamento de clientes de maneira que podem
 - `Redux`: Entenda os conceitos e princípios dos gerenciadores com base no Redux.
 - `BloC`: Veja como funciona a teoria dos gerenciadores que implementam o padrão BloC.
 
- 
 
-
-## 🛠️ Abrir e rodar o projeto
+### 🛠️ Abrir e rodar o projeto
 
 **Para executar este projeto você precisa:**
 
@@ -44,9 +43,20 @@ O projeto do curso consiste em um gerenciamento de clientes de maneira que podem
 - Ter a [SDK do Flutter](https://docs.flutter.dev/get-started/install) na versão 3.0.0
 
 
-## 📚 Mais informações do curso
+### 📚 Mais informações do curso
 
 Gostou do projeto e quer conhecer mais? Você pode [acessar o curso]() que desenvolve o projeto desde o começo!
 
 Esse curso faz parte da [formação de Flutter da Alura](https://cursos.alura.com.br/formacao-flutter)
 
+## Flutter: integration test
+
+- Review unit test
+- Review widget test
+- Build integration test
+
+Modules
+1. Integration tests
+2. Test end to end
+3. Test with Provider
+4. Real World Projects
