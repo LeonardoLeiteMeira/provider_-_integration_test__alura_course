@@ -1,8 +1,11 @@
+import 'package:client_control/models/clientTypeStore.dart';
 import 'package:client_control/models/client_type.dart';
+import 'package:client_control/models/clientsStore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:client_control/main.dart' as app;
+import 'package:provider/provider.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +16,10 @@ void main() {
     const newClientEmail = "leo@email.com";
     const newTypeIcon = Icons.card_giftcard;
 
-    app.main();
+    final myProviderKey = GlobalKey();
+
+    app.main(providerKey: myProviderKey);
+
     await tester.pumpAndSettle();
     expect(find.text("Clients"), findsOneWidget);
     expect(find.byIcon(Icons.menu), findsOneWidget);
@@ -64,6 +70,23 @@ void main() {
     await tester.tap(saveButton);
     await tester.pumpAndSettle();
 
+    // Testando se o novo tipo de cliente esta no provider
+    expect(
+        Provider.of<ClientTypeStore>(myProviderKey.currentContext!,
+                listen: false)
+            .clientTypes
+            .last
+            .name,
+        newType);
+
+    expect(
+        Provider.of<ClientTypeStore>(myProviderKey.currentContext!,
+                listen: false)
+            .clientTypes
+            .last
+            .icon,
+        newTypeIcon);
+
     final clientTypeAdded = find.widgetWithText(Dismissible, newType);
     expect(clientTypeAdded, findsOneWidget);
     expect(find.byIcon(newTypeIcon), findsOneWidget);
@@ -113,10 +136,47 @@ void main() {
     final checkText = find.byIcon(newTypeIcon);
     expect(checkText, findsOneWidget);
 
-    //TODO Teste de apagar usuario tester.drag
-    //...
+    //Testando se o cliente ta no provider
+    expect(
+        Provider.of<ClientsStore>(myProviderKey.currentContext!, listen: false)
+            .clients
+            .last
+            .name,
+        newClientName);
+    expect(
+        Provider.of<ClientsStore>(myProviderKey.currentContext!, listen: false)
+            .clients
+            .last
+            .email,
+        newClientEmail);
 
-    //TODO teste de sair do app
-    //...
+    final sizeOfClientListWithNewClient =
+        Provider.of<ClientsStore>(myProviderKey.currentContext!, listen: false)
+            .clients
+            .length;
+
+    // Apagar usuario tester.drag
+    await tester.drag(newClientWithIcon, const Offset(500, 0));
+    await tester.pumpAndSettle();
+
+    final deletedClientWithIcon =
+        find.widgetWithText(Dismissible, "$newClientName ($newType)");
+    expect(deletedClientWithIcon, findsNothing);
+
+    //Verificar se apagou do provider
+    expect(
+        Provider.of<ClientsStore>(myProviderKey.currentContext!, listen: false)
+            .clients
+            .length,
+        sizeOfClientListWithNewClient - 1);
+
+    //Sair do app
+    await tester.tap(find.byIcon(Icons.menu));
+    await tester.pumpAndSettle();
+
+    final logoutButton = find.text("Sair");
+    expect(logoutButton, findsOneWidget);
+    // await tester.tap(logoutButton);
+    // await tester.pumpAndSettle();
   });
 }

@@ -5,12 +5,15 @@ import 'package:provider/provider.dart';
 import 'models/clientTypeStore.dart';
 import 'pages/clients_page.dart';
 
-void main() => runApp(MultiProvider(
+void main({List<String> args = const [], Key providerKey = const Key("")}) =>
+    runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ClientsStore()),
         ChangeNotifierProvider(create: (_) => ClientTypeStore())
       ],
-      child: const MyApp(),
+      child: MyApp(
+        key: providerKey,
+      ),
     ));
 
 class MyApp extends StatelessWidget {
